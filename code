@@ -1,0 +1,33 @@
+import React from 'react';
+import { Button, View, StyleSheet } from 'react-native';
+import * as ScreenOrientation from 'expo-screen-orientation';
+
+export default function App() {
+  const changeToLandscape = async () => {
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+  };
+
+  const toggleLock = async () => {
+    const orientationLock = await ScreenOrientation.getOrientationLockAsync();
+    if (orientationLock === ScreenOrientation.OrientationLock.DEFAULT) {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    } else {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Button title="Change to Landscape" onPress={changeToLandscape} />
+      <Button title="Toggle Lock/Unlock" onPress={toggleLock} />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
